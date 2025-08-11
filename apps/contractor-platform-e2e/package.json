@@ -1,0 +1,10 @@
+{
+  "name": "@contractor-platform/contractor-platform-e2e",
+  "version": "0.0.1",
+  "private": true,
+  "nx": {
+    "implicitDependencies": [
+      "@contractor-platform/contractor-platform"
+    ]
+  }
+}
