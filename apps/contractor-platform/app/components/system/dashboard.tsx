@@ -1,5 +1,6 @@
 import {
   AppBar,
+  Card,
   Divider,
   List,
   ListItemButton,
@@ -451,7 +452,7 @@ export default function ContractorDashboard() {
       {/* Main */}
       <main className="flex-1 p-4 md:p-6 overflow-auto">
         <header className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-6">
-          <h1 className="text-2xl md:text-3xl font-semibold">Dashboard</h1>
+          <br />
           <div className="flex gap-2">
             <input
               value={query}
@@ -474,28 +475,104 @@ export default function ContractorDashboard() {
         </header>
 
         {/* Summary cards */}
-        <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mb-6">
-          <div className="p-5 bg-white rounded-2xl shadow">
-            <p className="text-sm text-gray-500">Active Projects</p>
-            <p className="text-3xl font-bold">{projects.length}</p>
-          </div>
-          <div className="p-5 bg-white rounded-2xl shadow">
-            <p className="text-sm text-gray-500">Pending Invoices</p>
-            <p className="text-3xl font-bold">{pendingInvoices.length}</p>
-          </div>
-          <div className="p-5 bg-white rounded-2xl shadow">
-            <p className="text-sm text-gray-500">Overdue Invoices</p>
-            <p className="text-3xl font-bold">{overdueInvoices.length}</p>
-          </div>
-          <div className="p-5 bg-white rounded-2xl shadow">
-            <p className="text-sm text-gray-500">Latest Monthly Revenue</p>
-            <p className="text-3xl font-bold">
-              {new Intl.NumberFormat(undefined, {
-                style: 'currency',
-                currency: 'USD',
-              }).format(monthlyRevenue)}
-            </p>
-          </div>
+        <section className="flex flex-row gap-4 mb-6 flex-nowrap overflow-x-auto w-full">
+          <Card className="flex-1 min-w-[220px] max-w-[300px]">
+            <AppBar
+              position="static"
+              color="inherit"
+              elevation={0}
+              sx={{
+                borderRadius: 2,
+                boxShadow: 'none',
+                background: 'transparent',
+              }}
+            >
+              <Toolbar
+                sx={{
+                  flexDirection: 'column',
+                  alignItems: 'flex-start',
+                  p: 2,
+                }}
+              >
+                <p className="text-sm text-gray-500">Active Projects</p>
+                <p className="text-3xl font-bold">{projects.length}</p>
+              </Toolbar>
+            </AppBar>
+          </Card>
+          <Card className="flex-1 min-w-[220px] max-w-[300px]">
+            <AppBar
+              position="static"
+              color="inherit"
+              elevation={0}
+              sx={{
+                borderRadius: 2,
+                boxShadow: 'none',
+                background: 'transparent',
+              }}
+            >
+              <Toolbar
+                sx={{
+                  flexDirection: 'column',
+                  alignItems: 'flex-start',
+                  p: 2,
+                }}
+              >
+                <p className="text-sm text-gray-500">Pending Invoices</p>
+                <p className="text-3xl font-bold">{pendingInvoices.length}</p>
+              </Toolbar>
+            </AppBar>
+          </Card>
+          <Card className="flex-1 min-w-[220px] max-w-[300px]">
+            <AppBar
+              position="static"
+              color="inherit"
+              elevation={0}
+              sx={{
+                borderRadius: 2,
+                boxShadow: 'none',
+                background: 'transparent',
+              }}
+            >
+              <Toolbar
+                sx={{
+                  flexDirection: 'column',
+                  alignItems: 'flex-start',
+                  p: 2,
+                }}
+              >
+                <p className="text-sm text-gray-500">Overdue Invoices</p>
+                <p className="text-3xl font-bold">{overdueInvoices.length}</p>
+              </Toolbar>
+            </AppBar>
+          </Card>
+          <Card className="flex-1 min-w-[220px] max-w-[300px]">
+            <AppBar
+              position="static"
+              color="inherit"
+              elevation={0}
+              sx={{
+                borderRadius: 2,
+                boxShadow: 'none',
+                background: 'transparent',
+              }}
+            >
+              <Toolbar
+                sx={{
+                  flexDirection: 'column',
+                  alignItems: 'flex-start',
+                  p: 2,
+                }}
+              >
+                <p className="text-sm text-gray-500">Latest Monthly Revenue</p>
+                <p className="text-3xl font-bold">
+                  {new Intl.NumberFormat(undefined, {
+                    style: 'currency',
+                    currency: 'USD',
+                  }).format(monthlyRevenue)}
+                </p>
+              </Toolbar>
+            </AppBar>
+          </Card>
         </section>
 
         {/* Charts */}
