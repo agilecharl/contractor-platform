@@ -1,4 +1,5 @@
 import AppBar from '@mui/material/AppBar';
+import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -6,6 +7,19 @@ import ListItemText from '@mui/material/ListItemText';
 import Paper from '@mui/material/Paper';
 import Toolbar from '@mui/material/Toolbar';
 import { useEffect, useMemo, useRef, useState } from 'react';
+import {
+  CartesianGrid,
+  Cell,
+  Legend,
+  Line,
+  LineChart,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from 'recharts';
 
 // Simple Item component for demonstration
 function Item({ children }: { children: React.ReactNode }) {
@@ -428,6 +442,36 @@ export default function ContractorDashboard() {
           </List>
         </Toolbar>
       </AppBar>
+      <header className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-6">
+        <div className="flex gap-2">
+          <input
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search projects or clients..."
+            className="px-3 py-2 bg-white rounded-xl shadow border w-64"
+          />
+          <select
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value as any)}
+            className="px-3 py-2 bg-white rounded-xl shadow border"
+          >
+            <option value="All">All Statuses</option>
+            <option value="Pending">Pending</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Completed">Completed</option>
+            <option value="On Hold">On Hold</option>
+          </select>
+        </div>
+        <aside className="hidden md:flex md:flex-col w-64 bg-white shadow-lg">
+          <div className="p-6 text-2xl font-bold border-b">Contractor</div>
+
+          <Divider />
+          <div className="p-4 text-xs text-gray-500 border-t">
+            v1.0 • Mock mode {USE_MOCK ? 'ON' : 'OFF'}
+          </div>
+        </aside>
+        <br />
+      </header>
       <Grid container spacing={2}>
         <Grid size={3}>
           <Item>Active Projects</Item>
@@ -451,111 +495,7 @@ export default function ContractorDashboard() {
           </Item>
         </Grid>
       </Grid>
-    </>
-  );
-}
-
-/*
-
-
-
-    <div className="flex h-screen bg-gray-50 text-gray-900">
-      <aside className="hidden md:flex md:flex-col w-64 bg-white shadow-lg">
-        <div className="p-6 text-2xl font-bold border-b">Contractor</div>
-        <nav className="mt-4 flex-1">
-          <AppBar
-            position="static"
-            color="default"
-            elevation={0}
-            sx={{ boxShadow: 'none', background: 'transparent' }}
-          >
-            <Toolbar sx={{ flexDirection: 'row', alignItems: 'center', p: 0 }}>
-              <List
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  width: '100%',
-                  p: 0,
-                }}
-              >
-                <ListItemButton selected sx={{ flex: 1 }}>
-                  <ListItemText
-                    primary="Dashboard"
-                    slotProps={{
-                      primary: { style: { fontWeight: '500' } },
-                    }}
-                  />
-                </ListItemButton>
-                <ListItemButton sx={{ flex: 1 }}>
-                  <ListItemText primary="Projects" />
-                </ListItemButton>
-                <ListItemButton sx={{ flex: 1 }}>
-                  <ListItemText primary="Invoices" />
-                </ListItemButton>
-                <ListItemButton sx={{ flex: 1 }}>
-                  <ListItemText primary="Messages" />
-                </ListItemButton>
-                <ListItemButton sx={{ flex: 1 }}>
-                  <ListItemText primary="Settings" />
-                </ListItemButton>
-              </List>
-            </Toolbar>
-          </AppBar>
-        </nav>
-        <Divider />
-        <div className="p-4 text-xs text-gray-500 border-t">
-          v1.0 • Mock mode {USE_MOCK ? 'ON' : 'OFF'}
-        </div>
-      </aside>
-
       <main className="">
-        <header className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-6">
-          <br />
-          <div className="flex gap-2">
-            <input
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search projects or clients..."
-              className="px-3 py-2 bg-white rounded-xl shadow border w-64"
-            />
-            <select
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value as any)}
-              className="px-3 py-2 bg-white rounded-xl shadow border"
-            >
-              <option value="All">All Statuses</option>
-              <option value="Pending">Pending</option>
-              <option value="In Progress">In Progress</option>
-              <option value="Completed">Completed</option>
-              <option value="On Hold">On Hold</option>
-            </select>
-          </div>
-        </header>
-
-        <div>
-          <Card>
-            <p>Active Projects</p>
-            <p>{projects.length}</p>
-          </Card>
-          <Card>
-            <p>Pending Invoices</p>
-            <p>{pendingInvoices.length}</p>
-          </Card>
-          <Card>
-            <p>Overdue Invoices</p>
-            <p>{overdueInvoices.length}</p>
-          </Card>
-          <Card>
-            <p>Latest Monthly Revenue</p>
-            <p>
-              {new Intl.NumberFormat(undefined, {
-                style: 'currency',
-                currency: 'USD',
-              }).format(monthlyRevenue)}
-            </p>
-          </Card>
-        </div>
-
         <section className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
           <div className="bg-white rounded-2xl shadow p-4">
             <div className="flex items-center justify-between mb-2">
@@ -614,7 +554,6 @@ export default function ContractorDashboard() {
             </div>
           </div>
         </section>
-
         <section className="bg-white rounded-2xl shadow p-4 mb-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-semibold">Projects</h2>
@@ -712,7 +651,6 @@ export default function ContractorDashboard() {
           )}
         </section>
 
-
         <section className="bg-white rounded-2xl shadow p-4 mb-6">
           <h2 className="text-lg font-semibold mb-4">Invoices</h2>
           <div className="overflow-x-auto">
@@ -763,7 +701,6 @@ export default function ContractorDashboard() {
           </div>
         </section>
 
-
         <section className="bg-white rounded-2xl shadow p-4 mb-12">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-semibold">Notifications</h2>
@@ -795,6 +732,6 @@ export default function ContractorDashboard() {
           </ul>
         </section>
       </main>
-    </div >
-
-      */
+    </>
+  );
+}
