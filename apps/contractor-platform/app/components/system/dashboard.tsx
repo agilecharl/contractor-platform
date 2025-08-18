@@ -1,26 +1,11 @@
-import {
-  AppBar,
-  Card,
-  Divider,
-  List,
-  ListItemButton,
-  ListItemText,
-  Toolbar,
-} from '@mui/material';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import {
-  CartesianGrid,
-  Cell,
-  Legend,
-  Line,
-  LineChart,
-  Pie,
-  PieChart,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from 'recharts';
+
+// Simple Item component for demonstration
+function Item({ children }: { children: React.ReactNode }) {
+  return <Paper style={{ padding: 16 }}>{children}</Paper>;
+}
 
 // --------------------------------------------------------
 // Contractor Dashboard (Interactive + Realtime-ready)
@@ -399,8 +384,37 @@ export default function ContractorDashboard() {
   }
 
   return (
+    <Grid container spacing={2}>
+      <Grid size={3}>
+        <Item>Active Projects</Item>
+        <Item>{projects.length}</Item>
+      </Grid>
+      <Grid size={3}>
+        <Item>Pending Invoices</Item>
+        <Item>{pendingInvoices.length}</Item>
+      </Grid>
+      <Grid size={3}>
+        <Item>Overdue Invoices</Item>
+        <Item>{overdueInvoices.length}</Item>
+      </Grid>
+      <Grid size={3}>
+        <Item>Latest Monthly Revenue</Item>
+        <Item>
+          {new Intl.NumberFormat(undefined, {
+            style: 'currency',
+            currency: 'USD',
+          }).format(monthlyRevenue)}
+        </Item>
+      </Grid>
+    </Grid>
+  );
+}
+
+/*
+
+
+
     <div className="flex h-screen bg-gray-50 text-gray-900">
-      {/* Sidebar */}
       <aside className="hidden md:flex md:flex-col w-64 bg-white shadow-lg">
         <div className="p-6 text-2xl font-bold border-b">Contractor</div>
         <nav className="mt-4 flex-1">
@@ -449,8 +463,7 @@ export default function ContractorDashboard() {
         </div>
       </aside>
 
-      {/* Main */}
-      <main className="flex-1 p-4 md:p-6 overflow-auto">
+      <main className="">
         <header className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-6">
           <br />
           <div className="flex gap-2">
@@ -474,108 +487,30 @@ export default function ContractorDashboard() {
           </div>
         </header>
 
-        {/* Summary cards */}
-        <section className="flex flex-row gap-4 mb-6 flex-nowrap overflow-x-auto w-full">
-          <Card className="flex-1 min-w-[220px] max-w-[300px]">
-            <AppBar
-              position="static"
-              color="inherit"
-              elevation={0}
-              sx={{
-                borderRadius: 2,
-                boxShadow: 'none',
-                background: 'transparent',
-              }}
-            >
-              <Toolbar
-                sx={{
-                  flexDirection: 'column',
-                  alignItems: 'flex-start',
-                  p: 2,
-                }}
-              >
-                <p className="text-sm text-gray-500">Active Projects</p>
-                <p className="text-3xl font-bold">{projects.length}</p>
-              </Toolbar>
-            </AppBar>
+        <div>
+          <Card>
+            <p>Active Projects</p>
+            <p>{projects.length}</p>
           </Card>
-          <Card className="flex-1 min-w-[220px] max-w-[300px]">
-            <AppBar
-              position="static"
-              color="inherit"
-              elevation={0}
-              sx={{
-                borderRadius: 2,
-                boxShadow: 'none',
-                background: 'transparent',
-              }}
-            >
-              <Toolbar
-                sx={{
-                  flexDirection: 'column',
-                  alignItems: 'flex-start',
-                  p: 2,
-                }}
-              >
-                <p className="text-sm text-gray-500">Pending Invoices</p>
-                <p className="text-3xl font-bold">{pendingInvoices.length}</p>
-              </Toolbar>
-            </AppBar>
+          <Card>
+            <p>Pending Invoices</p>
+            <p>{pendingInvoices.length}</p>
           </Card>
-          <Card className="flex-1 min-w-[220px] max-w-[300px]">
-            <AppBar
-              position="static"
-              color="inherit"
-              elevation={0}
-              sx={{
-                borderRadius: 2,
-                boxShadow: 'none',
-                background: 'transparent',
-              }}
-            >
-              <Toolbar
-                sx={{
-                  flexDirection: 'column',
-                  alignItems: 'flex-start',
-                  p: 2,
-                }}
-              >
-                <p className="text-sm text-gray-500">Overdue Invoices</p>
-                <p className="text-3xl font-bold">{overdueInvoices.length}</p>
-              </Toolbar>
-            </AppBar>
+          <Card>
+            <p>Overdue Invoices</p>
+            <p>{overdueInvoices.length}</p>
           </Card>
-          <Card className="flex-1 min-w-[220px] max-w-[300px]">
-            <AppBar
-              position="static"
-              color="inherit"
-              elevation={0}
-              sx={{
-                borderRadius: 2,
-                boxShadow: 'none',
-                background: 'transparent',
-              }}
-            >
-              <Toolbar
-                sx={{
-                  flexDirection: 'column',
-                  alignItems: 'flex-start',
-                  p: 2,
-                }}
-              >
-                <p className="text-sm text-gray-500">Latest Monthly Revenue</p>
-                <p className="text-3xl font-bold">
-                  {new Intl.NumberFormat(undefined, {
-                    style: 'currency',
-                    currency: 'USD',
-                  }).format(monthlyRevenue)}
-                </p>
-              </Toolbar>
-            </AppBar>
+          <Card>
+            <p>Latest Monthly Revenue</p>
+            <p>
+              {new Intl.NumberFormat(undefined, {
+                style: 'currency',
+                currency: 'USD',
+              }).format(monthlyRevenue)}
+            </p>
           </Card>
-        </section>
+        </div>
 
-        {/* Charts */}
         <section className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
           <div className="bg-white rounded-2xl shadow p-4">
             <div className="flex items-center justify-between mb-2">
@@ -635,7 +570,6 @@ export default function ContractorDashboard() {
           </div>
         </section>
 
-        {/* Project list with progress + inline update */}
         <section className="bg-white rounded-2xl shadow p-4 mb-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-semibold">Projects</h2>
@@ -733,7 +667,7 @@ export default function ContractorDashboard() {
           )}
         </section>
 
-        {/* Invoices */}
+
         <section className="bg-white rounded-2xl shadow p-4 mb-6">
           <h2 className="text-lg font-semibold mb-4">Invoices</h2>
           <div className="overflow-x-auto">
@@ -784,7 +718,7 @@ export default function ContractorDashboard() {
           </div>
         </section>
 
-        {/* Notifications */}
+
         <section className="bg-white rounded-2xl shadow p-4 mb-12">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-semibold">Notifications</h2>
@@ -816,6 +750,6 @@ export default function ContractorDashboard() {
           </ul>
         </section>
       </main>
-    </div>
-  );
-}
+    </div >
+
+      */
