@@ -1,5 +1,10 @@
+import AppBar from '@mui/material/AppBar';
 import Grid from '@mui/material/Grid';
+import List from '@mui/material/List';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
 import Paper from '@mui/material/Paper';
+import Toolbar from '@mui/material/Toolbar';
 import { useEffect, useMemo, useRef, useState } from 'react';
 
 // Simple Item component for demonstration
@@ -384,29 +389,69 @@ export default function ContractorDashboard() {
   }
 
   return (
-    <Grid container spacing={2}>
-      <Grid size={3}>
-        <Item>Active Projects</Item>
-        <Item>{projects.length}</Item>
+    <>
+      <AppBar
+        position="static"
+        color="default"
+        elevation={0}
+        sx={{ boxShadow: 'none', background: 'transparent' }}
+      >
+        <Toolbar sx={{ flexDirection: 'row', alignItems: 'center', p: 0 }}>
+          <List
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              width: '100%',
+              p: 0,
+            }}
+          >
+            <ListItemButton selected sx={{ flex: 1 }}>
+              <ListItemText
+                primary="Dashboard"
+                slotProps={{
+                  primary: { style: { fontWeight: '500' } },
+                }}
+              />
+            </ListItemButton>
+            <ListItemButton sx={{ flex: 1 }}>
+              <ListItemText primary="Projects" />
+            </ListItemButton>
+            <ListItemButton sx={{ flex: 1 }}>
+              <ListItemText primary="Invoices" />
+            </ListItemButton>
+            <ListItemButton sx={{ flex: 1 }}>
+              <ListItemText primary="Messages" />
+            </ListItemButton>
+            <ListItemButton sx={{ flex: 1 }}>
+              <ListItemText primary="Settings" />
+            </ListItemButton>
+          </List>
+        </Toolbar>
+      </AppBar>
+      <Grid container spacing={2}>
+        <Grid size={3}>
+          <Item>Active Projects</Item>
+          <Item>{projects.length}</Item>
+        </Grid>
+        <Grid size={3}>
+          <Item>Pending Invoices</Item>
+          <Item>{pendingInvoices.length}</Item>
+        </Grid>
+        <Grid size={3}>
+          <Item>Overdue Invoices</Item>
+          <Item>{overdueInvoices.length}</Item>
+        </Grid>
+        <Grid size={3}>
+          <Item>Latest Monthly Revenue</Item>
+          <Item>
+            {new Intl.NumberFormat(undefined, {
+              style: 'currency',
+              currency: 'USD',
+            }).format(monthlyRevenue)}
+          </Item>
+        </Grid>
       </Grid>
-      <Grid size={3}>
-        <Item>Pending Invoices</Item>
-        <Item>{pendingInvoices.length}</Item>
-      </Grid>
-      <Grid size={3}>
-        <Item>Overdue Invoices</Item>
-        <Item>{overdueInvoices.length}</Item>
-      </Grid>
-      <Grid size={3}>
-        <Item>Latest Monthly Revenue</Item>
-        <Item>
-          {new Intl.NumberFormat(undefined, {
-            style: 'currency',
-            currency: 'USD',
-          }).format(monthlyRevenue)}
-        </Item>
-      </Grid>
-    </Grid>
+    </>
   );
 }
 
